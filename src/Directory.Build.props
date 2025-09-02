@@ -1,0 +1,12 @@
+<Project>
+  <!-- Packaging -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Authors>DevOps Team Federal Chancellery</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>Swiss.FCh.Cube.RawData</PackageId>
+  </PropertyGroup>
+</Project>
