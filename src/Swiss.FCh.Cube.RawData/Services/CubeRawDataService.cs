@@ -161,6 +161,30 @@ internal class CubeRawDataService : ICubeRawDataService
                         graph.CreateUriNode(dataRow.KeyUri),
                         graph.CreateUriNode(dimensionValue.Predicate),
                         graph.CreateLiteralNode(dimensionValue.Value, dimensionValue.LanguageTag));
+
+                var currentSchema = dimensionValue.Predicate;
+
+                var colonIndex = currentSchema.IndexOf(':');
+                var slashIndex = currentSchema.IndexOf('/');
+
+                var index = colonIndex == -1 ? slashIndex : colonIndex;
+
+                var blankNodeId = currentSchema.Substring(index + 1).TrimStart();
+
+                if (!predicatesAlreadyAddedToShape.Contains(currentSchema))
+                {
+                    yield return new Triple(
+                        graph.CreateUriNode($"{cubeUri}/shape"),
+                        graph.CreateUriNode("w3:ns/shacl#property"),
+                        graph.CreateBlankNode($"shape_blank_{blankNodeId}"));
+
+                    yield return new Triple(
+                        graph.CreateBlankNode($"shape_blank_{blankNodeId}"),
+                        graph.CreateUriNode("w3:ns/shacl#path"),
+                        graph.CreateUriNode(currentSchema));
+
+                    predicatesAlreadyAddedToShape.Add(currentSchema);
+                }
             }
         }
     }

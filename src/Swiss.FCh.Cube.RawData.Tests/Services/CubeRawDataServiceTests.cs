@@ -90,8 +90,10 @@ internal class CubeRawDataServiceTests
 
         //Validate values
         ValidateTriple(result, "http://example.com/key/1", "http://example.com/hasSomeOtherProperty", "a value", "'normal' values must be added as triples");
+        ValidateTriple(result, "_:shape_blank_hasSomeOtherProperty", "http://www.w3.org/ns/shacl#path", "http://example.com/hasSomeOtherProperty", "must have shacl path for 'a value'");
 
         ValidateTriple(result, "http://example.com/key/1", "http://example.com/hasSomeOtherLangProperty", "this is text", "'normal' values with language tags must be added as triples", langTag: "de");
+        ValidateTriple(result, "_:shape_blank_hasSomeOtherLangProperty", "http://www.w3.org/ns/shacl#path", "http://example.com/hasSomeOtherLangProperty", "must have shacl path for 'this is text'");
     }
 
     private void ValidateTriple(IEnumerable<Triple> triples, object s, object p, object o, string failMessage, string? langTag = null)
