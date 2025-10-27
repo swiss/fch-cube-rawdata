@@ -23,13 +23,13 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '7.0.x'
 
       - name: Install dotnet tool
         run: dotnet tool install -g dotnet-project-licenses
 
       - name: Generate THIRD_PARTY_LICENSES.md
-        run: dotnet-project-licenses --output THIRD_PARTY_LICENSES.md --include-transitive
+        run: dotnet-project-licenses --input . --md --outfile THIRD-PARTY-LICENSES.md
 
       - name: Commit and push THIRD_PARTY_LICENSES.md
         run: |
