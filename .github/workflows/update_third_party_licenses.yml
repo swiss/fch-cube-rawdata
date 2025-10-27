@@ -11,7 +11,7 @@ permissions:
   contents: write  # needed to push the updated file
 
 jobs:
-  update-sbom:
+  update-third-party-licenses:
     runs-on: ubuntu-latest
 
     steps:
