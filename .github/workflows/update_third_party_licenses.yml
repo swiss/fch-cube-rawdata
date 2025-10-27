@@ -33,7 +33,7 @@ jobs:
 
       - name: Commit and push THIRD_PARTY_LICENSES.md
         run: |
-          if git diff --quiet THIRD_PARTY_LICENSES.md; then
+          if git diff --quiet -- THIRD_PARTY_LICENSES.md; then
             echo "No changes to THIRD_PARTY_LICENSES.md"
             exit 0
           fi
