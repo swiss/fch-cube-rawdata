@@ -1,5 +1,8 @@
 name: Build and Publish to NuGet.org
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
 
