@@ -1,10 +1,11 @@
-namespace Swiss.FCh.Cube.RawData.Model;
-
-public class DimensionValue
+namespace Swiss.FCh.Cube.RawData.Model
 {
-    public required string Predicate { get; init; }
+    public class DimensionValue
+    {
+        public string Predicate { get; set; }
 
-    public required string Object { get; init; }
+        public string Object { get; set; }
 
-    public string? LanguageTag { get; init; }
+        public string LanguageTag { get; set; }
+    }
 }

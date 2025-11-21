@@ -1,0 +1,5 @@
+dotnet_diagnostic.CA1720.severity = none
+dotnet_diagnostic.CA1002.severity = none
+dotnet_diagnostic.CA1056.severity = none
+dotnet_diagnostic.CA1054.severity = none
+dotnet_diagnostic.CA1305.severity = none #Date format issue -> fixme
