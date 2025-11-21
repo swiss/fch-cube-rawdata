@@ -6,14 +6,14 @@ using VDS.RDF.Nodes;
 namespace Swiss.FCh.Cube.RawData.Tests.Services;
 
 [TestFixture]
-internal class RawDataServiceTests
+internal sealed class RawDataServiceTests
 {
     private readonly RawDataService _cubeRawDataService = new();
 
     [Test]
     public void CreateTriples_WithValidInpu_ReturnsTriplesCorrectly()
     {
-        Graph graph = new();
+        using Graph graph = new();
 
         const string cubeUri = "example:cube";
 
@@ -57,10 +57,10 @@ internal class RawDataServiceTests
 
         //validate definition of the cube
         ValidateTriple(result, "http://example.com/cube", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/Cube", "Cube type must be set");
-        ValidateTriple(result, "http://example.com/cube", "https://cube.link/observationSet", "http://example.com/observationSet", "Cube must have an observation set");
+        ValidateTriple(result, "http://example.com/cube", "https://cube.link/observationSet", "http://example.com/cube/observationSet", "Cube must have an observation set");
 
         //validate data rows 0
-        ValidateTriple(result, "http://example.com/observationSet", "https://cube.link/observation", "http://example.com/key/1", "Observation set must have an observation");
+        ValidateTriple(result, "http://example.com/cube/observationSet", "https://cube.link/observation", "http://example.com/key/1", "Observation set must have an observation");
         ValidateTriple(result, "http://example.com/key/1", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/Observation", "Type of observation must be set");
         ValidateTriple(result, "http://example.com/key/1", "https://cube.link/observedBy", "https://ld.admin.ch/FCh", "Observation must have 'observed by' property");
         ValidateTriple(result, "http://example.com/key/1", "http://example.com/hasProperty", "http://example.com/someValue", "Observation must have linkt to a key dimension");
@@ -68,7 +68,7 @@ internal class RawDataServiceTests
         ValidateTriple(result, "http://example.com/key/1", "http://schema.org/validTo", "2020-02-02", "valid to of key/1 must be set");
 
         //validate data row 1
-        ValidateTriple(result, "http://example.com/observationSet", "https://cube.link/observation", "http://example.com/key/2", "Observation set must have an observation");
+        ValidateTriple(result, "http://example.com/cube/observationSet", "https://cube.link/observation", "http://example.com/key/2", "Observation set must have an observation");
         ValidateTriple(result, "http://example.com/key/2", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/Observation", "Type of observation must be set");
         ValidateTriple(result, "http://example.com/key/2", "https://cube.link/observedBy", "https://ld.admin.ch/FCh", "Observation must have 'observed by' property");
         ValidateTriple(result, "http://example.com/key/2", "http://example.com/hasProperty", "http://example.com/someOtherValue", "Observation must have linkt to a key dimension");
@@ -95,7 +95,7 @@ internal class RawDataServiceTests
         ValidateTriple(result, "_:shape_blank_hasSomeOtherLangProperty", "http://www.w3.org/ns/shacl#path", "http://example.com/hasSomeOtherLangProperty", "must have shacl path for 'this is text'");
     }
 
-    private void ValidateTriple(IEnumerable<Triple> triples, object s, object p, object o, string failMessage, string? langTag = null)
+    private static void ValidateTriple(IEnumerable<Triple> triples, object s, object p, object o, string failMessage, string? langTag = null)
     {
         Assert.That(
             triples.Any
@@ -111,7 +111,7 @@ internal class RawDataServiceTests
             failMessage);
     }
 
-    private bool MatchNode(INode n, object expected, string? langTag = null)
+    private static bool MatchNode(INode n, object expected, string? langTag = null)
     {
         if (n is LiteralNode literal && !string.IsNullOrEmpty(literal.Language))
         {

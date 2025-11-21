@@ -1,8 +1,9 @@
-namespace Swiss.FCh.Cube.RawData.Model;
-
-public class KeyDimensionLink
+namespace Swiss.FCh.Cube.RawData.Model
 {
-    public required string Predicate { get; init; }
+    public class KeyDimensionLink
+    {
+        public string Predicate { get; set; }
 
-    public required string Uri { get; init; }
+        public string Uri { get; set; }
+    }
 }
