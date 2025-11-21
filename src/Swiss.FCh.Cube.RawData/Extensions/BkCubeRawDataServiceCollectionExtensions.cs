@@ -8,9 +8,9 @@ namespace Swiss.FCh.Cube.RawData.Extensions;
 public static class BkCubeRawDataServiceCollectionExtensions
 {
     // ReSharper disable once UnusedMember.Global : Used by the library's consumers
-    public static IServiceCollection AddCubeRawData(this IServiceCollection services)
+    public static IServiceCollection AddRawDataService(this IServiceCollection services)
     {
-        services.AddScoped<ICubeRawDataService, CubeRawDataService>();
+        services.AddScoped<ICubeRawDataService, RawDataService>();
 
         return services;
     }

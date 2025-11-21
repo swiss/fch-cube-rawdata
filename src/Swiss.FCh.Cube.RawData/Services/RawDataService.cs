@@ -6,12 +6,11 @@ using VDS.RDF.Parsing;
 
 namespace Swiss.FCh.Cube.RawData.Services;
 
-internal class CubeRawDataService : ICubeRawDataService
+internal class RawDataService : ICubeRawDataService
 {
     public IEnumerable<Triple> CreateTriples(
         Graph graph,
         string cubeUri,
-        string observationSetUri,
         IEnumerable<ObservationDataRow> dataRows)
     {
         graph.NamespaceMap.AddNamespace("rdf",    new Uri("http://www.w3.org/1999/02/22-rdf-syntax-ns#"));
@@ -20,6 +19,8 @@ internal class CubeRawDataService : ICubeRawDataService
         graph.NamespaceMap.AddNamespace("ld",     new Uri("https://ld.admin.ch"));
         graph.NamespaceMap.AddNamespace("w3",     new Uri("http://www.w3.org/"));
         graph.NamespaceMap.AddNamespace("cube",   new Uri("https://cube.link/"));
+
+        var observationSetUri = $"{cubeUri}/observationSet";
 
         List<string> predicatesAlreadyAddedToShape = [];
 
@@ -82,13 +83,13 @@ internal class CubeRawDataService : ICubeRawDataService
                 yield return
                     new Triple(
                         graph.CreateUriNode(dataRow.KeyUri),
-                        graph.CreateUriNode(keyDimensionLink.PredicateUri),
+                        graph.CreateUriNode(keyDimensionLink.Predicate),
                         graph.CreateUriNode(keyDimensionLink.Uri));
 
-                if (!predicatesAlreadyAddedToShape.Contains(keyDimensionLink.PredicateUri))
+                if (!predicatesAlreadyAddedToShape.Contains(keyDimensionLink.Predicate))
                 {
                     //shape (constraint) triples for links to key dimensions
-                    var blankNodeId = $"blank_{CleanNodeId(keyDimensionLink.PredicateUri)}";
+                    var blankNodeId = $"blank_{CleanNodeId(keyDimensionLink.Predicate)}";
 
                     yield return new Triple(
                         graph.CreateUriNode($"{cubeUri}/shape"),
@@ -98,9 +99,9 @@ internal class CubeRawDataService : ICubeRawDataService
                     yield return new Triple(
                         graph.CreateBlankNode(blankNodeId),
                         graph.CreateUriNode("w3:ns/shacl#path"),
-                        graph.CreateUriNode(keyDimensionLink.PredicateUri));
+                        graph.CreateUriNode(keyDimensionLink.Predicate));
 
-                    predicatesAlreadyAddedToShape.Add(keyDimensionLink.PredicateUri);
+                    predicatesAlreadyAddedToShape.Add(keyDimensionLink.Predicate);
                 }
             }
 
@@ -160,7 +161,7 @@ internal class CubeRawDataService : ICubeRawDataService
                     new Triple(
                         graph.CreateUriNode(dataRow.KeyUri),
                         graph.CreateUriNode(dimensionValue.Predicate),
-                        graph.CreateLiteralNode(dimensionValue.Value, dimensionValue.LanguageTag));
+                        graph.CreateLiteralNode(dimensionValue.Object, dimensionValue.LanguageTag));
 
                 var currentSchema = dimensionValue.Predicate;
 
