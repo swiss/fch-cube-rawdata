@@ -6,9 +6,9 @@ using VDS.RDF.Nodes;
 namespace Swiss.FCh.Cube.RawData.Tests.Services;
 
 [TestFixture]
-internal class CubeRawDataServiceTests
+internal class RawDataServiceTests
 {
-    private readonly CubeRawDataService _cubeRawDataService = new();
+    private readonly RawDataService _cubeRawDataService = new();
 
     [Test]
     public void CreateTriples_WithValidInpu_ReturnsTriplesCorrectly()
@@ -16,7 +16,6 @@ internal class CubeRawDataServiceTests
         Graph graph = new();
 
         const string cubeUri = "example:cube";
-        const string observationSetUri = "example:observationSet";
 
         graph.NamespaceMap.AddNamespace("example", new Uri("http://example.com/"));
 
@@ -37,16 +36,16 @@ internal class CubeRawDataServiceTests
             ];
 
         dataRows[0].KeyDimensionLinks.Add(
-            new KeyDimensionLink { PredicateUri = "example:hasProperty", Uri = "example:someValue"});
+            new KeyDimensionLink { Predicate = "example:hasProperty", Uri = "example:someValue"});
 
-        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherProperty", Value = "a value"});
+        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherProperty", Object = "a value"});
 
-        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherLangProperty", Value = "this is text", LanguageTag = "de"});
+        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherLangProperty", Object = "this is text", LanguageTag = "de"});
 
         dataRows[1].KeyDimensionLinks.Add(
-            new KeyDimensionLink { PredicateUri = "example:hasProperty", Uri = "example:someOtherValue"});
+            new KeyDimensionLink { Predicate = "example:hasProperty", Uri = "example:someOtherValue"});
 
-        var result = _cubeRawDataService.CreateTriples(graph, cubeUri, observationSetUri, dataRows).ToList();
+        var result = _cubeRawDataService.CreateTriples(graph, cubeUri, dataRows).ToList();
 
         Assert.That(result, Is.Not.Null);
 

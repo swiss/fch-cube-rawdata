@@ -4,7 +4,7 @@ public class DimensionValue
 {
     public required string Predicate { get; init; }
 
-    public required string Value { get; init; }
+    public required string Object { get; init; }
 
     public string? LanguageTag { get; init; }
 }
