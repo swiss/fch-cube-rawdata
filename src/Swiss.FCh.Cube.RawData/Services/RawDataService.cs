@@ -48,45 +48,39 @@ namespace Swiss.FCh.Cube.RawData.Services
                 graph.CreateLiteralNode("true", UriFactory.Create(XmlSpecsHelper.XmlSchemaDataTypeBoolean)));
 
             // definition of the cube
-            yield return
-                new Triple(
-                    graph.CreateUriNode(cubeUri),
-                    graph.CreateUriNode("rdf:type"),
-                    graph.CreateUriNode("cube:Cube"));
+            yield return new Triple(
+                graph.CreateUriNode(cubeUri),
+                graph.CreateUriNode("rdf:type"),
+                graph.CreateUriNode("cube:Cube"));
 
-            yield return
-                new Triple(
-                    graph.CreateUriNode(cubeUri),
-                    graph.CreateUriNode("cube:observationSet"),
-                    graph.CreateUriNode(observationSetUri));
+            yield return new Triple(
+                graph.CreateUriNode(cubeUri),
+                graph.CreateUriNode("cube:observationSet"),
+                graph.CreateUriNode(observationSetUri));
 
             foreach (var dataRow in dataRows)
             {
-                yield return
-                    new Triple(
-                        graph.CreateUriNode(observationSetUri),
-                        graph.CreateUriNode("cube:observation"),
-                        graph.CreateUriNode(dataRow.KeyUri));
+                yield return new Triple(
+                    graph.CreateUriNode(observationSetUri),
+                    graph.CreateUriNode("cube:observation"),
+                    graph.CreateUriNode(dataRow.KeyUri));
 
-                yield return
-                    new Triple(
-                        graph.CreateUriNode(dataRow.KeyUri),
-                        graph.CreateUriNode("rdf:type"),
-                        graph.CreateUriNode("cube:Observation"));
+                yield return new Triple(
+                    graph.CreateUriNode(dataRow.KeyUri),
+                    graph.CreateUriNode("rdf:type"),
+                    graph.CreateUriNode("cube:Observation"));
 
-                yield return
-                    new Triple(
-                        graph.CreateUriNode(dataRow.KeyUri),
-                        graph.CreateUriNode("cube:observedBy"),
-                        graph.CreateUriNode("ld:FCh"));
+                yield return new Triple(
+                    graph.CreateUriNode(dataRow.KeyUri),
+                    graph.CreateUriNode("cube:observedBy"),
+                    graph.CreateUriNode("ld:FCh"));
 
                 foreach (var keyDimensionLink in dataRow.KeyDimensionLinks)
                 {
-                    yield return
-                        new Triple(
-                            graph.CreateUriNode(dataRow.KeyUri),
-                            graph.CreateUriNode(keyDimensionLink.Predicate),
-                            graph.CreateUriNode(keyDimensionLink.Uri));
+                    yield return new Triple(
+                        graph.CreateUriNode(dataRow.KeyUri),
+                        graph.CreateUriNode(keyDimensionLink.Predicate),
+                        graph.CreateUriNode(keyDimensionLink.Uri));
 
                     if (!predicatesAlreadyAddedToShape.Contains(keyDimensionLink.Predicate))
                     {
@@ -109,11 +103,10 @@ namespace Swiss.FCh.Cube.RawData.Services
 
                 if (dataRow.ValidFrom.HasValue)
                 {
-                    yield return
-                        new Triple(
-                            graph.CreateUriNode(dataRow.KeyUri),
-                            graph.CreateUriNode("schema:validFrom"),
-                            graph.CreateLiteralNode(dataRow.ValidFrom.Value.ToString("yyyy-MM-dd"), UriFactory.Create(XmlSpecsHelper.XmlSchemaDataTypeDate)));
+                    yield return new Triple(
+                        graph.CreateUriNode(dataRow.KeyUri),
+                        graph.CreateUriNode("schema:validFrom"),
+                        graph.CreateLiteralNode(dataRow.ValidFrom.Value.ToString("yyyy-MM-dd"), UriFactory.Create(XmlSpecsHelper.XmlSchemaDataTypeDate)));
 
                     //shape (constraint) triples for 'valid from' date
                     if (!predicatesAlreadyAddedToShape.Contains("schema:validFrom"))
@@ -134,11 +127,10 @@ namespace Swiss.FCh.Cube.RawData.Services
 
                 if (dataRow.ValidTo.HasValue)
                 {
-                    yield return
-                        new Triple(
-                            graph.CreateUriNode(dataRow.KeyUri),
-                            graph.CreateUriNode("schema:validTo"),
-                            graph.CreateLiteralNode(dataRow.ValidTo.Value.ToString("yyyy-MM-dd"), UriFactory.Create(XmlSpecsHelper.XmlSchemaDataTypeDate)));
+                    yield return new Triple(
+                        graph.CreateUriNode(dataRow.KeyUri),
+                        graph.CreateUriNode("schema:validTo"),
+                        graph.CreateLiteralNode(dataRow.ValidTo.Value.ToString("yyyy-MM-dd"), UriFactory.Create(XmlSpecsHelper.XmlSchemaDataTypeDate)));
 
                     //shape (constraint) triples for 'valid to' date
                     if (!predicatesAlreadyAddedToShape.Contains("schema:validTo"))
@@ -159,11 +151,10 @@ namespace Swiss.FCh.Cube.RawData.Services
 
                 foreach (var dimensionValue in dataRow.Values)
                 {
-                    yield return
-                        new Triple(
-                            graph.CreateUriNode(dataRow.KeyUri),
-                            graph.CreateUriNode(dimensionValue.Predicate),
-                            graph.CreateLiteralNode(dimensionValue.Object, dimensionValue.LanguageTag));
+                    yield return new Triple(
+                        graph.CreateUriNode(dataRow.KeyUri),
+                        graph.CreateUriNode(dimensionValue.Predicate),
+                        graph.CreateLiteralNode(dimensionValue.Object, dimensionValue.LanguageTag));
 
                     var currentSchema = dimensionValue.Predicate;
 
