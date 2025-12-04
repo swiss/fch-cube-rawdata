@@ -151,11 +151,22 @@ namespace Swiss.FCh.Cube.RawData.Services
 
                 foreach (var dimensionValue in dataRow.Values)
                 {
-                    yield return new Triple(
-                        graph.CreateUriNode(dataRow.KeyUri),
-                        graph.CreateUriNode(dimensionValue.Predicate),
-                        graph.CreateLiteralNode(dimensionValue.Object, dimensionValue.LanguageTag));
+                    if (string.IsNullOrEmpty(dimensionValue.DataTypeUri))
+                    {
+                        yield return new Triple(
+                            graph.CreateUriNode(dataRow.KeyUri),
+                            graph.CreateUriNode(dimensionValue.Predicate),
+                            graph.CreateLiteralNode(dimensionValue.Object, dimensionValue.LanguageTag));
+                    }
+                    else
+                    {
+                        var uri = new Uri(dimensionValue.DataTypeUri);
 
+                        yield return new Triple(
+                            graph.CreateUriNode(dataRow.KeyUri),
+                            graph.CreateUriNode(dimensionValue.Predicate),
+                            graph.CreateLiteralNode(dimensionValue.Object, uri));
+                    }
                     var currentSchema = dimensionValue.Predicate;
 
                     var colonIndex = currentSchema.IndexOf(':');
