@@ -42,9 +42,9 @@ internal sealed class RawDataServiceTests
 
         dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherLangProperty", Object = "this is text", LanguageTag = "de"});
 
-        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:decimalValue", Object = "50.50", LanguageTag = null, DataType = "http://www.w3.org/2001/XMLSchema#decimal" });
+        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:decimalValue", Object = "50.50", LanguageTag = null, DataTypeUri = "http://www.w3.org/2001/XMLSchema#decimal" });
 
-        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:numberValue", Object = "1", DataType = "http://www.w3.org/2001/XMLSchema#integer" });
+        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:numberValue", Object = "1", DataTypeUri = "http://www.w3.org/2001/XMLSchema#integer" });
 
         dataRows[1].KeyDimensionLinks.Add(
             new KeyDimensionLink { Predicate = "example:hasProperty", Uri = "example:someOtherValue"});

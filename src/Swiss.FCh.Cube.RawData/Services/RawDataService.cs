@@ -151,7 +151,7 @@ namespace Swiss.FCh.Cube.RawData.Services
 
                 foreach (var dimensionValue in dataRow.Values)
                 {
-                    if (string.IsNullOrEmpty(dimensionValue.DataType))
+                    if (string.IsNullOrEmpty(dimensionValue.DataTypeUri))
                     {
                         yield return new Triple(
                             graph.CreateUriNode(dataRow.KeyUri),
@@ -160,7 +160,7 @@ namespace Swiss.FCh.Cube.RawData.Services
                     }
                     else
                     {
-                        var uri = new Uri(dimensionValue.DataType);
+                        var uri = new Uri(dimensionValue.DataTypeUri);
 
                         yield return new Triple(
                             graph.CreateUriNode(dataRow.KeyUri),

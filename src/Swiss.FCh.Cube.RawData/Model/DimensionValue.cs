@@ -8,6 +8,6 @@ namespace Swiss.FCh.Cube.RawData.Model
 
         public string LanguageTag { get; set; }
 
-        public string DataType { get; set; }
+        public string DataTypeUri { get; set; }
     }
 }
