@@ -42,6 +42,10 @@ internal sealed class RawDataServiceTests
 
         dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherLangProperty", Object = "this is text", LanguageTag = "de"});
 
+        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:decimalValue", Object = "50.50", LanguageTag = null, DataType = "http://www.w3.org/2001/XMLSchema#decimal" });
+
+        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:numberValue", Object = "1", DataType = "http://www.w3.org/2001/XMLSchema#integer" });
+
         dataRows[1].KeyDimensionLinks.Add(
             new KeyDimensionLink { Predicate = "example:hasProperty", Uri = "example:someOtherValue"});
 
@@ -93,6 +97,12 @@ internal sealed class RawDataServiceTests
 
         ValidateTriple(result, "http://example.com/key/1", "http://example.com/hasSomeOtherLangProperty", "this is text", "'normal' values with language tags must be added as triples", langTag: "de");
         ValidateTriple(result, "_:shape_blank_hasSomeOtherLangProperty", "http://www.w3.org/ns/shacl#path", "http://example.com/hasSomeOtherLangProperty", "must have shacl path for 'this is text'");
+
+        ValidateDataTypeTriple(result, "http://example.com/key/1", "http://example.com/decimalValue", "50.50", "'numeric' values must be added as triples with uri", dataType: "http://www.w3.org/2001/XMLSchema#decimal");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://www.w3.org/ns/shacl#path", "http://example.com/decimalValue", "must have shacl path for '50.50'");
+
+        ValidateDataTypeTriple(result, "http://example.com/key/1", "http://example.com/numberValue", "1", "'numeric' values must be added as triples with uri", dataType: "http://www.w3.org/2001/XMLSchema#integer");
+        ValidateTriple(result, "_:shape_blank_numberValue", "http://www.w3.org/ns/shacl#path", "http://example.com/numberValue", "must have shacl path for '1'");
     }
 
     private static void ValidateTriple(IEnumerable<Triple> triples, object s, object p, object o, string failMessage, string? langTag = null)
@@ -107,6 +117,22 @@ internal sealed class RawDataServiceTests
 
                     return subjectMatches && predicateMatches && objectMatches;
                 }
+            ),
+            failMessage);
+    }
+
+    private static void ValidateDataTypeTriple(IEnumerable<Triple> triples, object s, object p, object o, string failMessage, string dataType)
+    {
+        Assert.That(
+            triples.Any
+            (t =>
+            {
+                var subjectMatches = MatchNode(t.Subject, s);
+                var predicateMatches = MatchNode(t.Predicate, p);
+                var objectMatches = MatchNode(t.Object, o, dataType);
+
+                return subjectMatches && predicateMatches && objectMatches;
+            }
             ),
             failMessage);
     }
