@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 2.0.1
+- Introduce DataType to DimensionValue
+
 ## Version 2.0.0
 BREAKING CHANGE: multiple renamings
 - IServiceCollection.AddCubeRawData -> IServiceCollection.AddRawDataService

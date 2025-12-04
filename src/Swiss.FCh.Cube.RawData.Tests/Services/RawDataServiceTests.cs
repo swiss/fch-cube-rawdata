@@ -11,7 +11,7 @@ internal sealed class RawDataServiceTests
     private readonly RawDataService _cubeRawDataService = new();
 
     [Test]
-    public void CreateTriples_WithValidInpu_ReturnsTriplesCorrectly()
+    public void CreateTriples_WithValidInput_ReturnsTriplesCorrectly()
     {
         using Graph graph = new();
 
