@@ -21,12 +21,13 @@ namespace Swiss.FCh.Cube.RawData.Services
             graph.NamespaceMap.AddNamespace("ld", new Uri("https://ld.admin.ch"));
             graph.NamespaceMap.AddNamespace("w3", new Uri("http://www.w3.org/"));
             graph.NamespaceMap.AddNamespace("cube", new Uri("https://cube.link/"));
+            graph.NamespaceMap.AddNamespace("qudt", new Uri("https://qudt.org/schema/"));
 
             var observationSetUri = $"{cubeUri}/observationSet";
 
             var predicatesAlreadyAddedToShape = new List<string>();
 
-            // shape triples (constaint)
+            // shape triples (constraint)
             yield return new Triple(
                 graph.CreateUriNode(cubeUri),
                 graph.CreateUriNode("cube:observationConstraint"),
@@ -96,6 +97,83 @@ namespace Swiss.FCh.Cube.RawData.Services
                             graph.CreateBlankNode(blankNodeId),
                             graph.CreateUriNode("w3:ns/shacl#path"),
                             graph.CreateUriNode(keyDimensionLink.Predicate));
+
+                        if (keyDimensionLink.ShapePropertyMetadata != null)
+                        {
+                            var shapeMetadata = keyDimensionLink.ShapePropertyMetadata;
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.NodeKind))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("w3:ns/shacl#nodeKind"),
+                                    graph.CreateUriNode(shapeMetadata.NodeKind));
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.Type))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("rdf:type"),
+                                    graph.CreateUriNode(shapeMetadata.Type));
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.NameDe))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("schema:name"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.NameDe, "de"));
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.NameFr))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("schema:name"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.NameFr, "fr"));
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.NameIt))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("schema:name"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.NameIt, "it"));
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.NameEn))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("schema:name"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.NameEn, "en"));
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(keyDimensionLink.ShapePropertyMetadata.ScaleType))
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("qudt:scaleType"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.ScaleType));
+                            }
+
+                            if (keyDimensionLink.ShapePropertyMetadata.MinCount != null)
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("w3:ns/shacl#minCount"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.MinCount.Value.ToString(), new Uri("http://www.w3.org/2001/XMLSchema#integer")));
+                            }
+
+                            if (keyDimensionLink.ShapePropertyMetadata.MaxCount != null)
+                            {
+                                yield return new Triple(
+                                    graph.CreateBlankNode(blankNodeId),
+                                    graph.CreateUriNode("w3:ns/shacl#maxCount"),
+                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.MaxCount.Value.ToString(), new Uri("http://www.w3.org/2001/XMLSchema#integer")));
+                            }
+                        }
 
                         predicatesAlreadyAddedToShape.Add(keyDimensionLink.Predicate);
                     }

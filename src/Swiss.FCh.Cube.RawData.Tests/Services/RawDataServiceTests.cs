@@ -36,7 +36,21 @@ internal sealed class RawDataServiceTests
             ];
 
         dataRows[0].KeyDimensionLinks.Add(
-            new KeyDimensionLink { Predicate = "example:hasProperty", Uri = "example:someValue"});
+            new KeyDimensionLink
+            {
+                Predicate = "example:hasProperty", Uri = "example:someValue", ShapePropertyMetadata = new ShapePropertyMetadata
+                {
+                    NodeKind = "w3:ns/shacl#IRI",
+                    Type = "cube:MeasureDimension",
+                    NameDe = "DE_Foo",
+                    NameFr = "FR_Foo",
+                    NameIt = "IT_Foo",
+                    NameEn = "EN_Foo",
+                    ScaleType = "qudt:NominalScale",
+                    MinCount = 1,
+                    MaxCount = 1
+                }
+            });
 
         dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherProperty", Object = "a value"});
 
@@ -67,7 +81,7 @@ internal sealed class RawDataServiceTests
         ValidateTriple(result, "http://example.com/cube/observationSet", "https://cube.link/observation", "http://example.com/key/1", "Observation set must have an observation");
         ValidateTriple(result, "http://example.com/key/1", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/Observation", "Type of observation must be set");
         ValidateTriple(result, "http://example.com/key/1", "https://cube.link/observedBy", "https://ld.admin.ch/FCh", "Observation must have 'observed by' property");
-        ValidateTriple(result, "http://example.com/key/1", "http://example.com/hasProperty", "http://example.com/someValue", "Observation must have linkt to a key dimension");
+        ValidateTriple(result, "http://example.com/key/1", "http://example.com/hasProperty", "http://example.com/someValue", "Observation must have link to a key dimension");
         ValidateTriple(result, "http://example.com/key/1", "http://schema.org/validFrom", "2020-01-01", "valid from of key/1 must be set");
         ValidateTriple(result, "http://example.com/key/1", "http://schema.org/validTo", "2020-02-02", "valid to of key/1 must be set");
 
@@ -75,13 +89,24 @@ internal sealed class RawDataServiceTests
         ValidateTriple(result, "http://example.com/cube/observationSet", "https://cube.link/observation", "http://example.com/key/2", "Observation set must have an observation");
         ValidateTriple(result, "http://example.com/key/2", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/Observation", "Type of observation must be set");
         ValidateTriple(result, "http://example.com/key/2", "https://cube.link/observedBy", "https://ld.admin.ch/FCh", "Observation must have 'observed by' property");
-        ValidateTriple(result, "http://example.com/key/2", "http://example.com/hasProperty", "http://example.com/someOtherValue", "Observation must have linkt to a key dimension");
+        ValidateTriple(result, "http://example.com/key/2", "http://example.com/hasProperty", "http://example.com/someOtherValue", "Observation must have link to a key dimension");
         ValidateTriple(result, "http://example.com/key/2", "http://schema.org/validFrom", "2021-01-01", "valid from of key/2 must be set");
         ValidateTriple(result, "http://example.com/key/2", "http://schema.org/validTo", "2021-02-02", "valid to of key/2 must be set");
 
         //shacl path for 'hasProperty' (must be written only once)
         ValidateTriple(result, "http://example.com/cube/shape", "http://www.w3.org/ns/shacl#property", "_:blank_example_hasProperty", "Shape must contain blank not referencing 'hasProperty'");
         ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/ns/shacl#path", "http://example.com/hasProperty", "blank node for 'hasProperty' must have a path attached");
+
+        //shape property metadata for 'hasProperty' (must be written only once)
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/ns/shacl#nodeKind", "http://www.w3.org/ns/shacl#IRI", "blank node for 'hasProperty' must have a node kind attached");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/MeasureDimension", "blank node for 'hasProperty' must have a type attached");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://schema.org/name", "DE_Foo", "blank node for 'hasProperty' must have a german name attached", "de");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://schema.org/name", "FR_Foo", "blank node for 'hasProperty' must have a french name attached", "fr");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://schema.org/name", "IT_Foo", "blank node for 'hasProperty' must have a italian name attached", "it");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://schema.org/name", "EN_Foo", "blank node for 'hasProperty' must have a english name attached", "en");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/ns/shacl#minCount", "1", "blank node for 'hasProperty' must have min attached");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/ns/shacl#maxCount", "1", "blank node for 'hasProperty' must have max attached");
+        ValidateTriple(result, "_:blank_example_hasProperty", "https://qudt.org/schema/scaleType", "qudt:NominalScale", "blank node for 'hasProperty' must have scale type attached");
 
         //shacl path for 'validFrom'
         ValidateTriple(result, "http://example.com/cube/shape", "http://www.w3.org/ns/shacl#property", "_:shape_blank_validFrom", "must have blank node for 'validFrom' path");
