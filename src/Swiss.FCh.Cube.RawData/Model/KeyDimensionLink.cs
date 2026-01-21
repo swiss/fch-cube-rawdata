@@ -5,5 +5,7 @@ namespace Swiss.FCh.Cube.RawData.Model
         public string Predicate { get; set; }
 
         public string Uri { get; set; }
+
+        public ShapePropertyMetadata ShapePropertyMetadata { get; set; }
     }
 }
