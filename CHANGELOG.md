@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.0.3
+
+- Resolve qudt namespace
+
 ## Version 2.0.2
 
 - Extend KeyDimensionLink with ShapePropertyMetadata

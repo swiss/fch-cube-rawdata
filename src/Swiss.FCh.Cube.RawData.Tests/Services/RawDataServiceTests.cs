@@ -106,7 +106,7 @@ internal sealed class RawDataServiceTests
         ValidateTriple(result, "_:blank_example_hasProperty", "http://schema.org/name", "EN_Foo", "blank node for 'hasProperty' must have a english name attached", "en");
         ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/ns/shacl#minCount", "1", "blank node for 'hasProperty' must have min attached");
         ValidateTriple(result, "_:blank_example_hasProperty", "http://www.w3.org/ns/shacl#maxCount", "1", "blank node for 'hasProperty' must have max attached");
-        ValidateTriple(result, "_:blank_example_hasProperty", "https://qudt.org/schema/scaleType", "qudt:NominalScale", "blank node for 'hasProperty' must have scale type attached");
+        ValidateTriple(result, "_:blank_example_hasProperty", "http://qudt.org/schema/qudt/scaleType", "http://qudt.org/schema/qudt/NominalScale", "blank node for 'hasProperty' must have scale type attached");
 
         //shacl path for 'validFrom'
         ValidateTriple(result, "http://example.com/cube/shape", "http://www.w3.org/ns/shacl#property", "_:shape_blank_validFrom", "must have blank node for 'validFrom' path");
