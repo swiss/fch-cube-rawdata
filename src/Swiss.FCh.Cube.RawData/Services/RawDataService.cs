@@ -20,8 +20,7 @@ namespace Swiss.FCh.Cube.RawData.Services
             graph.NamespaceMap.AddNamespace("cube", new Uri("https://cube.link"));
             graph.NamespaceMap.AddNamespace("ld", new Uri("https://ld.admin.ch"));
             graph.NamespaceMap.AddNamespace("w3", new Uri("http://www.w3.org/"));
-            graph.NamespaceMap.AddNamespace("cube", new Uri("https://cube.link/"));
-            graph.NamespaceMap.AddNamespace("qudt", new Uri("https://qudt.org/schema/"));
+            graph.NamespaceMap.AddNamespace("qudt", new Uri("http://qudt.org/schema/qudt/"));
 
             var observationSetUri = $"{cubeUri}/observationSet";
 
@@ -155,7 +154,7 @@ namespace Swiss.FCh.Cube.RawData.Services
                                 yield return new Triple(
                                     graph.CreateBlankNode(blankNodeId),
                                     graph.CreateUriNode("qudt:scaleType"),
-                                    graph.CreateLiteralNode(keyDimensionLink.ShapePropertyMetadata.ScaleType));
+                                    graph.CreateUriNode(keyDimensionLink.ShapePropertyMetadata.ScaleType));
                             }
 
                             if (keyDimensionLink.ShapePropertyMetadata.MinCount != null)
