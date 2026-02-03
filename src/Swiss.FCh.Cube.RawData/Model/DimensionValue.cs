@@ -9,5 +9,7 @@ namespace Swiss.FCh.Cube.RawData.Model
         public string LanguageTag { get; set; }
 
         public string DataTypeUri { get; set; }
+
+        public ShapePropertyMetadata ShapePropertyMetadata { get; set; }
     }
 }

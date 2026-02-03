@@ -56,7 +56,26 @@ internal sealed class RawDataServiceTests
 
         dataRows[0].Values.Add(new DimensionValue { Predicate = "example:hasSomeOtherLangProperty", Object = "this is text", LanguageTag = "de"});
 
-        dataRows[0].Values.Add(new DimensionValue { Predicate = "example:decimalValue", Object = "50.50", LanguageTag = null, DataTypeUri = "http://www.w3.org/2001/XMLSchema#decimal" });
+        dataRows[0].Values.Add(
+            new DimensionValue
+            {
+                Predicate = "example:decimalValue",
+                Object = "50.50",
+                LanguageTag = null,
+                DataTypeUri = "http://www.w3.org/2001/XMLSchema#decimal",
+                ShapePropertyMetadata = new ShapePropertyMetadata
+                {
+                    NodeKind = "w3:ns/shacl#Literal",
+                    Type = "cube:MeasureDimension",
+                    NameDe = "DE_Foo",
+                    NameFr = "FR_Foo",
+                    NameIt = "IT_Foo",
+                    NameEn = "EN_Foo",
+                    ScaleType = "qudt:RatioScale",
+                    MinCount = 1,
+                    MaxCount = 1
+                }
+            });
 
         dataRows[0].Values.Add(new DimensionValue { Predicate = "example:numberValue", Object = "1", DataTypeUri = "http://www.w3.org/2001/XMLSchema#integer" });
 
@@ -128,6 +147,17 @@ internal sealed class RawDataServiceTests
 
         ValidateDataTypeTriple(result, "http://example.com/key/1", "http://example.com/numberValue", "1", "'numeric' values must be added as triples with uri", dataType: "http://www.w3.org/2001/XMLSchema#integer");
         ValidateTriple(result, "_:shape_blank_numberValue", "http://www.w3.org/ns/shacl#path", "http://example.com/numberValue", "must have shacl path for '1'");
+
+        //shape property metadata for 'decimalValue' (must be written only once)
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://www.w3.org/ns/shacl#nodeKind", "http://www.w3.org/ns/shacl#Literal", "blank node for 'decimalValue' must have a node kind attached");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "https://cube.link/MeasureDimension", "blank node for 'decimalValue' must have a type attached");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://schema.org/name", "DE_Foo", "blank node for 'decimalValue' must have a german name attached", "de");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://schema.org/name", "FR_Foo", "blank node for 'decimalValue' must have a french name attached", "fr");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://schema.org/name", "IT_Foo", "blank node for 'decimalValue' must have a italian name attached", "it");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://schema.org/name", "EN_Foo", "blank node for 'decimalValue' must have a english name attached", "en");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://www.w3.org/ns/shacl#minCount", "1", "blank node for 'decimalValue' must have min attached");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://www.w3.org/ns/shacl#maxCount", "1", "blank node for 'decimalValue' must have max attached");
+        ValidateTriple(result, "_:shape_blank_decimalValue", "http://qudt.org/schema/qudt/scaleType", "http://qudt.org/schema/qudt/RatioScale", "blank node for 'decimalValue' must have scale type attached");
     }
 
     private static void ValidateTriple(IEnumerable<Triple> triples, object s, object p, object o, string failMessage, string? langTag = null)

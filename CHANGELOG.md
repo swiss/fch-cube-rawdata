@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.0.4
+
+- Extend DimensionValue with ShapePropertyMetadata
+
 ## Version 2.0.3
 
 - Resolve qudt namespace
