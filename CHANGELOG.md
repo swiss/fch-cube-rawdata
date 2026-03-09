@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 2.0.5
+- README.md integrated in NuGet package
+
 ## Version 2.0.4
 
 - Extend DimensionValue with ShapePropertyMetadata

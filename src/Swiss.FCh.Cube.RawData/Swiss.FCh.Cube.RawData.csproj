@@ -4,6 +4,25 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../README.md" Pack="true" PackagePath="README.md">
+            <Link>README.md</Link>
+        </None>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <Authors>DevOps Team Federal Chancellery</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageId>Swiss.FCh.Cube.RawData</PackageId>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="dotNetRdf" Version="3.4.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
