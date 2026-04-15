@@ -201,7 +201,8 @@ internal sealed class RawDataServiceTests
 
         if (n.NodeType == NodeType.Blank)
         {
-            return n.ToString().Equals(expected);
+            var blankNodeWithoutGuid = string.Join("_", n.ToString().Split('_').Take(4));
+            return blankNodeWithoutGuid.Equals(expected);
         }
 
         return n.AsValuedNode().AsString().Equals(expected);
