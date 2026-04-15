@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 2.0.6
+- Randomization for blank node ids added to avoid "blank node overlap"
+
 ## Version 2.0.5
 - README.md integrated in NuGet package
 

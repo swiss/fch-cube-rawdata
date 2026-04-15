@@ -85,7 +85,7 @@ namespace Swiss.FCh.Cube.RawData.Services
                     if (!predicatesAlreadyAddedToShape.Contains(keyDimensionLink.Predicate))
                     {
                         //shape (constraint) triples for links to key dimensions
-                        var blankNodeId = $"blank_{CleanNodeId(keyDimensionLink.Predicate)}";
+                        var blankNodeId = $"blank_{CleanNodeId(keyDimensionLink.Predicate)}_{CleanNodeId(Guid.NewGuid().ToString())}";
 
                         yield return new Triple(
                             graph.CreateUriNode($"{cubeUri}/shape"),
