@@ -251,7 +251,7 @@ namespace Swiss.FCh.Cube.RawData.Services
 
                     var index = colonIndex == -1 ? slashIndex : colonIndex;
 
-                    var blankNodeId = currentSchema.Substring(index + 1).TrimStart();
+                    var blankNodeId = $"{currentSchema.Substring(index + 1).TrimStart()}_{CleanNodeId(Guid.NewGuid().ToString())}";
 
                     if (!predicatesAlreadyAddedToShape.Contains(currentSchema))
                     {
