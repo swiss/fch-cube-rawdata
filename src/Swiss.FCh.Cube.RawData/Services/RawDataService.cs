@@ -350,7 +350,7 @@ namespace Swiss.FCh.Cube.RawData.Services
 
         private static string CleanNodeId(string nodeId)
         {
-            var cleaned = Regex.Replace(nodeId, "[^a-zA-Z0-9]", "_");
+            var cleaned = Regex.Replace(nodeId, "[^a-zA-Z0-9]", "_", RegexOptions.Compiled, TimeSpan.FromSeconds(5));
             return cleaned;
         }
     }
