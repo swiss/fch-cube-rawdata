@@ -4,10 +4,13 @@ using VDS.RDF;
 
 namespace Swiss.FCh.Cube.RawData.Contract
 {
+    /// <summary>
+    /// This service is used to create a "raw data" (data rows of cubes) according to the https://cube.link schema.
+    /// </summary>
     public interface ICubeRawDataService
     {
         /// <summary>
-        /// Writes two dimensional raw data to an RDF cube (see: https://cube.link).
+        /// Writes two dimensional raw data to an RDF cube according to the https://cube.link schema.
         /// </summary>
         /// <param name="graph">RDF graph where the triples will be added.</param>
         /// <param name="cubeUri">Uri of the cube/></param>

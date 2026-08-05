@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Swiss.FCh.Cube.RawData.Model
 {
+    /// <summary>
+    /// This class represents a data row of a cube according to the https://cube.link schema.
+    /// </summary>
     public class ObservationDataRow
     {
         /// <summary>
