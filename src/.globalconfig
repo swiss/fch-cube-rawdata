@@ -3,3 +3,5 @@ dotnet_diagnostic.CA1002.severity = none
 dotnet_diagnostic.CA1056.severity = none
 dotnet_diagnostic.CA1054.severity = none
 dotnet_diagnostic.CA1305.severity = none #Date format issue -> fixme
+dotnet_diagnostic.S1075.severity = none #hardcoded URIs are fine in the context of RDF
+dotnet_diagnostic.S5332.severity = none #http URIs are fine in the context of RDF

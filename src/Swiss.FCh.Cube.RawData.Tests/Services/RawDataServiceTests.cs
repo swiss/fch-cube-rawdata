@@ -24,14 +24,14 @@ internal sealed class RawDataServiceTests
                 new()
                 {
                     KeyUri = "example:key/1",
-                    ValidFrom = new DateTime(2020, 1, 1),
-                    ValidTo = new DateTime(2020, 2, 2)
+                    ValidFrom = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    ValidTo = new DateTime(2020, 2, 2, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new()
                 {
                     KeyUri = "example:key/2",
-                    ValidFrom = new DateTime(2021, 1, 1),
-                    ValidTo = new DateTime(2021, 2, 2)
+                    ValidFrom = new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    ValidTo = new DateTime(2021, 2, 2, 0, 0, 0, DateTimeKind.Utc)
                 }
             ];
 
