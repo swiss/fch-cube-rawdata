@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 2.0.8
+XML documentation for public members added
+
 ## Version 2.0.7
 - Missing randomization for blank node ids added to avoid "blank node overlap"
 
