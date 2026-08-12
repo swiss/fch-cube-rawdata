@@ -3,7 +3,7 @@
 This library can be used to create RDF triples in the context of cubes (see: https://cube.link).
 The library should be used together with fch-cube-dimension.
 
-The latest NuGet package is published at https://www.nuget.org/packages/Swiss.FCh.Cube.Dimension/.
+The latest NuGet package is published at https://www.nuget.org/packages/Swiss.FCh.Cube.RawData.
 
 Additional information can be found here: https://github.com/swiss/fch-cube
 
@@ -19,5 +19,5 @@ To publish a new version of the NuGet package, proceed as follows.
 
 * apply and push your changes
 * define and describe the new version in ```CHANGELOG.md```
-* push the corresponding label with ```git tag vx.x.x``` and ```git push origin v.x.x.x```
+* push the corresponding label with ```git tag vx.x.x``` and ```git push origin vx.x.x```
 * go to GitHub -> Actions -> 'Build and Publish to NuGet.org' and trigger a run while specifying the correct GIT label
